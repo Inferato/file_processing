@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV File</title>
+</head>
+<body>
+    <h1>Upload CSV File</h1>
+    <form action="{% url 'process_csv' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="csv_file" accept=".csv">
+        <button type="submit">Process</button>
+    </form>
+    {% if processed_csv_url %}
+    <h2>Processed CSV File:</h2>
+    <a href="{{ processed_csv_url }}" download>Download processed CSV</a>
+    <h3>MD5 Checksum: {{ md5_checksum }}</h3>
+    <h3>Sum of last column: {{ last_column_sum }}</h3>
+    <h3>Processed CSV in JSON:</h3>
+    <pre>{{ processed_json }}</pre>
+    {% endif %}
+</body>
+</html>
